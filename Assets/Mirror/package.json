@@ -11,5 +11,12 @@
     },
     "dependencies": {
         "com.mirrorng.mirrorng": "https://github.com/MirrorNG/MirrorNG.git#upm"
-    }
+    },
+    "samples": [
+        {
+            "displayName": "Basic",
+            "description": "Demonstrate simple setup and synchronizing data",
+            "path": "Samples~/Basic"
+        }
+    ]
 }
