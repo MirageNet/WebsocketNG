@@ -81,7 +81,7 @@ jobs:
         with:
           entrypoint: /sonar-scanner.sh
           projectKey: MirrorNG_MirrorNG_Websocket
-          projectName: MirrorNG
+          projectName: MirrorNG Websocket
           sonarOrganisation: mirrorng
           beginArguments: /d:sonar.verbose="true" /d:sonar.cs.nunit.reportsPaths=Tests/editmode-results.xml /d:sonar.cs.opencover.reportsPaths=Tests/workspace-opencov/EditMode/TestCoverageResults_0000.xml
         env:
