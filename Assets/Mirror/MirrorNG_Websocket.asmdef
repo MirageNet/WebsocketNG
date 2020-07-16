@@ -1,0 +1,16 @@
+{
+    "name": "MirrorNG_Websocket",
+    "references": [
+        "GUID:f314da276aede4b96a9d5130f4833dd2",
+        "GUID:30817c1a0e6d646d99c048fc403f5979"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
