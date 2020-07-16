@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/MirrorNG/MirrorNG_Websocket/compare/1.0.0-master...1.1.0-master) (2020-07-16)
+
+
+### Features
+
+* add basic example with websocket ([b85296e](https://github.com/MirrorNG/MirrorNG_Websocket/commit/b85296eaadbcfb054153f77322f4f17ccc23bba7))
+* Add Multiplex example with websocket ([6937f59](https://github.com/MirrorNG/MirrorNG_Websocket/commit/6937f5939de07679bb0738c0e3532d32856fb186))
+
 # 1.0.0 (2020-07-16)
 
 
