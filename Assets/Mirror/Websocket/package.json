@@ -16,12 +16,12 @@
         {
             "displayName": "Basic",
             "description": "Demonstrate simple setup and synchronizing data",
-            "path": "Samples~/Basic"
+            "path": "../Examples/Basic"
         },
         {
             "displayName": "Multiplex",
             "description": "Demonstrate using both TCP and websocket transports in the same server",
-            "path": "Samples~/Multiplex"
+            "path": "../Examples/Multiplex"
         }
     ]
 }
