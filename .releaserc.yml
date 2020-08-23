@@ -1,5 +1,4 @@
 {
-    tagFormat: "${version}-master",
     "plugins": [
         "@semantic-release/github",
         "@semantic-release/release-notes-generator", 
