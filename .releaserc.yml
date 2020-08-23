@@ -12,7 +12,7 @@
             "pkgRoot": "Assets/Mirror"
         }],
         ["@semantic-release/git", {
-            "assets": ["Assets/Mirror/Websocket/package.json", "Assets/Mirror/Websocket/CHANGELOG.md"],
+            "assets": ["Assets/Mirror/package.json", "Assets/Mirror/CHANGELOG.md"],
             "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }],
     ]
