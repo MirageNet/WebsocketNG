@@ -7,10 +7,10 @@
     "author": "Paul Pacheco",
     "repository": {
         "type": "git",
-        "url": "https://github.com/MirrorNG/MirrorNG_Websocket.git#upm"
+        "url": "https://github.com/MirrorNG/MirrorNG_Websocket.git"
     },
     "dependencies": {
-        "com.mirrorng.mirrorng": "https://github.com/MirrorNG/MirrorNG.git#upm"
+        "com.mirrorng.mirrorng": "https://github.com/MirrorNG/MirrorNG.git#43.3.2"
     },
     "samples": [
         {
