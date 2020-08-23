@@ -10,7 +10,7 @@
         "url": "https://github.com/MirrorNG/MirrorNG_Websocket.git"
     },
     "dependencies": {
-        "com.mirrorng.mirrorng": "https://github.com/MirrorNG/MirrorNG.git"
+        "com.mirrorng.mirrorng": "https://github.com/MirrorNG/MirrorNG.git#upm"
     },
     "samples": [
         {
