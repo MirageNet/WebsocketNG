@@ -4,7 +4,9 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "MirrorNG_Websocket",
-        "Mirror"
+        "Mirror",
+        "UniTask",
+        "UniTask.Linq"
     ],
     "includePlatforms": [
         "Editor"

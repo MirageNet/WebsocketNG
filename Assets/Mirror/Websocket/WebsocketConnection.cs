@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Ninja.WebSockets.Internal;
 using Mirror;
 using System.Diagnostics;
+using Cysharp.Threading.Tasks;
 
 namespace Mirror.Websocket
 {
@@ -32,8 +33,8 @@ namespace Mirror.Websocket
             var wsClient = webSocket as WebSocketImplementation;
             return wsClient.TcpClient.Client.RemoteEndPoint;
         }
-        
-        public async Task<bool> ReceiveAsync(MemoryStream buffer)
+
+        public async UniTask<bool> ReceiveAsync(MemoryStream buffer)
         {
             try
             {
@@ -76,9 +77,9 @@ namespace Mirror.Websocket
             }
         }
 
-        public Task SendAsync(ArraySegment<byte> data)
+        public UniTask SendAsync(ArraySegment<byte> data)
         {
-            return webSocket.SendAsync(data, WebSocketMessageType.Binary, true, CancellationToken.None);
+            return webSocket.SendAsync(data, WebSocketMessageType.Binary, true, CancellationToken.None).AsUniTask();
         }
     }
 }
