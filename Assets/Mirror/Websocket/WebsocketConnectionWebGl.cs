@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AOT;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Mirror.Websocket
@@ -47,10 +48,10 @@ namespace Mirror.Websocket
         }
 
         // send the data or throw exception
-        public Task SendAsync(ArraySegment<byte> segment)
+        public UniTask SendAsync(ArraySegment<byte> segment)
         {
             SocketSend(nativeRef, segment.Array, segment.Count);
-            return Task.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
 #region Javascript native functions
@@ -97,7 +98,7 @@ namespace Mirror.Websocket
             clients[id].receivedQueue.Enqueue(data);
         }
 
-        public async Task<bool> ReceiveAsync(MemoryStream buffer)
+        public async UniTask<bool> ReceiveAsync(MemoryStream buffer)
         {
 
             byte [] data = await receivedQueue.DequeueAsync();

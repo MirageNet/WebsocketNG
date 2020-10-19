@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.WebSockets;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 #if !UNITY_WEBGL || UNITY_EDITOR
 using Ninja.WebSockets;
 #endif
@@ -44,7 +44,7 @@ namespace Mirror.Websocket
 
             await connection.ConnectAsync(uri);
 
-            return connection; 
+            return connection;
         }
 
         public override void Disconnect()
@@ -68,7 +68,7 @@ namespace Mirror.Websocket
         private TcpListener listener;
         private readonly IWebSocketServerFactory webSocketServerFactory = new WebSocketServerFactory();
 
-        public override async Task<IConnection> AcceptAsync()
+        public override async UniTask<IConnection> AcceptAsync()
         {
             try
             {
@@ -94,12 +94,12 @@ namespace Mirror.Websocket
             listener.Stop();
         }
 
-        public override Task ListenAsync()
+        public override UniTask ListenAsync()
         {
             listener = TcpListener.Create(Port);
             listener.Server.NoDelay = true;
             listener.Start();
-            return Task.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
         public override IEnumerable<Uri> ServerUri()
@@ -116,7 +116,7 @@ namespace Mirror.Websocket
 #endregion
 
 #region Client
-        public override async Task<IConnection> ConnectAsync(Uri uri)
+        public override async UniTask<IConnection> ConnectAsync(Uri uri)
         {
             var options = new WebSocketClientOptions
             {

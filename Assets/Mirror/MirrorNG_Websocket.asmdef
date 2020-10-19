@@ -2,7 +2,9 @@
     "name": "MirrorNG_Websocket",
     "references": [
         "GUID:f314da276aede4b96a9d5130f4833dd2",
-        "GUID:30817c1a0e6d646d99c048fc403f5979"
+        "GUID:30817c1a0e6d646d99c048fc403f5979",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:5c01796d064528144a599661eaab93a6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
