@@ -24,12 +24,12 @@ namespace Mirror.Websocket
 
 #if UNITY_WEBGL && !UNITY_EDITOR
 
-        public override Task<IConnection> AcceptAsync()
+        public override UniTask<IConnection> AcceptAsync()
         {
             throw new PlatformNotSupportedException("WebGL builds can only be clients");
         }
 
-        public override async Task<IConnection> ConnectAsync(Uri uri)
+        public override async UniTask<IConnection> ConnectAsync(Uri uri)
         {
             if (uri.IsDefaultPort)
             {
@@ -52,7 +52,7 @@ namespace Mirror.Websocket
             throw new PlatformNotSupportedException("WebGL builds can only be clients");
         }
 
-        public override Task ListenAsync()
+        public override UniTask ListenAsync()
         {
             throw new PlatformNotSupportedException("WebGL builds can only be clients");
         }
