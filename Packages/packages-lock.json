@@ -1,13 +1,21 @@
 {
   "dependencies": {
+    "com.cysharp.unitask": {
+      "version": "2.0.36",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.mirrorng.mirrorng": {
-      "version": "https://github.com/MirrorNG/MirrorNG.git#upm",
+      "version": "53.0.1",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {
-        "nuget.mono-cecil": "0.1.6-preview"
+        "nuget.mono-cecil": "0.1.6-preview",
+        "com.cysharp.unitask": "2.0.36"
       },
-      "hash": "e5c6f7307dae51da518e649ed068f0634eca663e"
+      "url": "https://package.openupm.com"
     },
     "com.unity.ext.nunit": {
       "version": "1.0.0",
@@ -16,8 +24,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.ide.visualstudio": {
+      "version": "2.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.ide.vscode": {
-      "version": "1.2.1",
+      "version": "1.2.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -49,7 +64,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework.performance": {
-      "version": "2.2.0-preview",
+      "version": "2.3.1-preview",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -59,7 +74,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.testtools.codecoverage": {
-      "version": "0.3.0-preview",
+      "version": "0.3.1-preview",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -73,7 +88,8 @@
       "depth": 0,
       "source": "builtin",
       "dependencies": {
-        "com.unity.modules.ui": "1.0.0"
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0"
       }
     },
     "nuget.mono-cecil": {
@@ -216,6 +232,18 @@
       "depth": 0,
       "source": "builtin",
       "dependencies": {
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.uielementsnative": "1.0.0"
+      }
+    },
+    "com.unity.modules.uielementsnative": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       }
