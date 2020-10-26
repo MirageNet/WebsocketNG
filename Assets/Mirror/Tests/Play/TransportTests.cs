@@ -6,16 +6,17 @@ using System.Text;
 using System.IO;
 using System.Net;
 
-using static Mirror.Tests.AsyncUtil;
 using System;
 using Object = UnityEngine.Object;
 using Mirror.Websocket;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 namespace Mirror.Tests
 {
     [TestFixture(typeof(WsTransport), new[] { "ws", "wss" }, "ws://localhost", 7778)]
+    [Timeout(10000)]
     public class AsyncTransportTests<T> where T : Transport
     {
         #region SetUp
@@ -37,7 +38,7 @@ namespace Mirror.Tests
         IConnection serverConnection;
 
         [UnitySetUp]
-        public IEnumerator Setup() => RunAsync(async () =>
+        public IEnumerator Setup() => UniTask.ToCoroutine(async () =>
         {
             transportObj = new GameObject();
 
@@ -64,7 +65,7 @@ namespace Mirror.Tests
         #endregion
 
         [UnityTest]
-        public IEnumerator ClientToServerTest() => RunAsync(async () =>
+        public IEnumerator ClientToServerTest() => UniTask.ToCoroutine(async () =>
         {
             Encoding utf8 = Encoding.UTF8;
             string message = "Hello from the client";
@@ -73,7 +74,7 @@ namespace Mirror.Tests
 
             var stream = new MemoryStream();
 
-            Assert.That(await serverConnection.ReceiveAsync(stream), Is.True);
+            await serverConnection.ReceiveAsync(stream);
             byte[] received = stream.ToArray();
             string receivedData = utf8.GetString(received);
             Assert.That(received, Is.EqualTo(data));
@@ -100,7 +101,7 @@ namespace Mirror.Tests
         }
 
         [UnityTest]
-        public IEnumerator ClientToServerMultipleTest() => RunAsync(async () =>
+        public IEnumerator ClientToServerMultipleTest() => UniTask.ToCoroutine(async () =>
         {
             Encoding utf8 = Encoding.UTF8;
             string message = "Hello from the client 1";
@@ -113,20 +114,20 @@ namespace Mirror.Tests
 
             var stream = new MemoryStream();
 
-            Assert.That(await serverConnection.ReceiveAsync(stream), Is.True);
+            await serverConnection.ReceiveAsync(stream);
             byte[] received = stream.ToArray();
             string receivedData = utf8.GetString(received);
             Assert.That(received, Is.EqualTo(data));
 
             stream.SetLength(0);
-            Assert.That(await serverConnection.ReceiveAsync(stream), Is.True);
+            await serverConnection.ReceiveAsync(stream);
             byte[] received2 = stream.ToArray();
             string receivedData2 = utf8.GetString(received2);
             Assert.That(received2, Is.EqualTo(data2));
         });
 
         [UnityTest]
-        public IEnumerator ServerToClientTest() => RunAsync(async () =>
+        public IEnumerator ServerToClientTest() => UniTask.ToCoroutine(async () =>
         {
             Encoding utf8 = Encoding.UTF8;
             string message = "Hello from the server";
@@ -135,37 +136,61 @@ namespace Mirror.Tests
 
             var stream = new MemoryStream();
 
-            Assert.That(await clientConnection.ReceiveAsync(stream), Is.True);
+            await clientConnection.ReceiveAsync(stream);
             byte[] received = stream.ToArray();
             string receivedData = utf8.GetString(received);
             Assert.That(received, Is.EqualTo(data));
         });
 
         [UnityTest]
-        public IEnumerator DisconnectServerTest() => RunAsync(async () =>
+        public IEnumerator DisconnectServerTest() => UniTask.ToCoroutine(async () =>
         {
             serverConnection.Disconnect();
 
             var stream = new MemoryStream();
-            Assert.That(await clientConnection.ReceiveAsync(stream), Is.False);
+            try
+            {
+                await clientConnection.ReceiveAsync(stream);
+                Assert.Fail("Should have been disconnected");
+            }
+            catch (EndOfStreamException)
+            {
+                // good ot go
+            }
         });
 
         [UnityTest]
-        public IEnumerator DisconnectClientTest() => RunAsync(async () =>
+        public IEnumerator DisconnectClientTest() => UniTask.ToCoroutine(async () =>
         {
             clientConnection.Disconnect();
 
             var stream = new MemoryStream();
-            Assert.That(await serverConnection.ReceiveAsync(stream), Is.False);
+            try
+            {
+                await serverConnection.ReceiveAsync(stream);
+                Assert.Fail("Should have been disconnected");
+            }
+            catch (EndOfStreamException)
+            {
+                // good ot go
+            }
         });
 
         [UnityTest]
-        public IEnumerator DisconnectClientTest2() => RunAsync(async () =>
+        public IEnumerator DisconnectClientTest2() => UniTask.ToCoroutine(async () =>
         {
             clientConnection.Disconnect();
 
             var stream = new MemoryStream();
-            Assert.That(await clientConnection.ReceiveAsync(stream), Is.False);
+            try
+            {
+                await clientConnection.ReceiveAsync(stream);
+                Assert.Fail("Should have been disconnected");
+            }
+            catch (EndOfStreamException)
+            {
+                // good ot go
+            }
         });
 
         [Test]

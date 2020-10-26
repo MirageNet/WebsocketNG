@@ -10,14 +10,21 @@ namespace Mirror.Websocket
     {
         public static void Loop(BlockingCollection<MemoryStream> queue, Stream stream, CancellationToken cancellationToken)
         {
-            // create write buffer for this thread
-            // wait for message
-            while (true)
+            try
             {
-                MemoryStream msg = queue.Take(cancellationToken);
+                // create write buffer for this thread
+                // wait for message
+                while (true)
+                {
+                    MemoryStream msg = queue.Take(cancellationToken);
 
-                stream.Write(msg.GetBuffer(), 0, (int)msg.Length);
-            }                
+                    stream.Write(msg.GetBuffer(), 0, (int)msg.Length);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // fine, someone stopped the connection
+            }
         }
 
         // 0               1                 2               3          

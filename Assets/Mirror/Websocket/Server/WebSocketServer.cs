@@ -64,10 +64,9 @@ namespace Mirror.Websocket.Server
                 }
 
             }
-            catch (Exception ex)
+            catch (SocketException)
             {
-                Debug.LogException(ex);
-                throw;
+                // fine,  someone stopped the connection
             }
             finally
             {

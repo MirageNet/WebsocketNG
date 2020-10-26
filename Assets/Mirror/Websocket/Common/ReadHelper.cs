@@ -34,10 +34,17 @@ namespace Mirror.Websocket
 
         public static byte ReadOneByte(this Stream stream)
         {
-            int value = stream.ReadByte();
-            if (value < 0)
+            try
+            {
+                int value = stream.ReadByte();
+                if (value < 0)
+                    throw new EndOfStreamException();
+                return (byte)value;
+            }
+            catch (SocketException)
+            {
                 throw new EndOfStreamException();
-            return (byte)value;
+            }
         }
 
         /// <summary>
@@ -82,7 +89,6 @@ namespace Mirror.Websocket
                     endIndex = 0;
                 }
             }
-
         }
     }
 }

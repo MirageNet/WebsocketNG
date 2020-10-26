@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Text;
+using UnityEngine;
 
 namespace Mirror.Websocket.Server
 {
@@ -21,6 +22,7 @@ namespace Mirror.Websocket.Server
         public static void Handshake(Stream stream)
         {
             var headerBuffer = new MemoryStream(GetBytes.Length);
+
             stream.ReadExact(headerBuffer, GetBytes.Length);
 
             if (!IsGet(headerBuffer.GetBuffer(), 0))
@@ -29,7 +31,6 @@ namespace Mirror.Websocket.Server
             }
 
             headerBuffer.SetLength(0);
-
             string msg = stream.ReadHttpHeader();
 
             AcceptHandshake(stream, msg);
@@ -47,54 +48,34 @@ namespace Mirror.Websocket.Server
 
         static void AcceptHandshake(Stream stream, string msg)
         {
-            MemoryStream keyBuffer = new MemoryStream();
-            MemoryStream responseBuffer = new MemoryStream();
+            var responseBuffer = new MemoryStream();
 
-            GetKey(msg, keyBuffer);
-            AppendGuid(keyBuffer);
-            byte[] keyHash = CreateHash(keyBuffer);
+            string key = GetKey(msg);
+            string keyHash = Nonce.Hash(key);
             CreateResponse(keyHash, responseBuffer);
-
             responseBuffer.WriteTo(stream);
         }
 
 
-        static void GetKey(string msg, MemoryStream keyBuffer)
+        static string GetKey(string msg)
         {
             int start = msg.IndexOf(KeyHeaderString) + KeyHeaderString.Length;
-            keyBuffer.SetLength(KeyLength);
-            Encoding.ASCII.GetBytes(msg, start, KeyLength, keyBuffer.GetBuffer(), 0);
+            return msg.Substring(start, KeyLength);
         }
 
-        static void AppendGuid(MemoryStream keyBuffer)
+        static void CreateResponse(string keyHash, MemoryStream responseBuffer)
         {
-            keyBuffer.Write(Constants.HandshakeGUIDBytes, 0, KeyLength);
-        }
-
-        static byte[] CreateHash(MemoryStream keyBuffer)
-        {
-            using (var sha1 = SHA1.Create())
-            {
-                return sha1.ComputeHash(keyBuffer.GetBuffer(), 0, (int)keyBuffer.Length);
-            }
-        }
-
-        static void CreateResponse(byte[] keyHash, MemoryStream responseBuffer)
-        {
-            string keyHashString = Convert.ToBase64String(keyHash);
-
             // compiler should merge these strings into 1 string before format
             string message = string.Format(
                 "HTTP/1.1 101 Switching Protocols\r\n" +
                 "Connection: Upgrade\r\n" +
                 "Upgrade: websocket\r\n" +
                 "Sec-WebSocket-Accept: {0}\r\n\r\n",
-                keyHashString);
+                keyHash);
 
-
-            responseBuffer.Capacity = message.Length + 100;
-            int bytes = Encoding.ASCII.GetBytes(message, 0, message.Length, responseBuffer.GetBuffer(), 0);
-            responseBuffer.SetLength(bytes);
+            responseBuffer.SetLength(message.Length);
+            Encoding.ASCII.GetBytes(message, 0, message.Length, responseBuffer.GetBuffer(), 0);
+            responseBuffer.Position = message.Length;
         }
     }
 }

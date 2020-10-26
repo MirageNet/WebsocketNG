@@ -86,6 +86,10 @@ namespace Mirror.Websocket.Server
                 receiveMsg.WriteTo(buffer);
                 return 0;
             }
+            catch (OperationCanceledException)
+            {
+                throw new EndOfStreamException();
+            }
             catch (ChannelClosedException)
             {
                 throw new EndOfStreamException();

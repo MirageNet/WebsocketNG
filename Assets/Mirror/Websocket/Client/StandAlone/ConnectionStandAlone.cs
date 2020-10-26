@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Mirror.Websocket.Client
 {
@@ -35,9 +36,7 @@ namespace Mirror.Websocket.Client
                 IsBackground = true
             };
             receiveThread.Start();
-
             await connectCompletionSource.Task;
-
             await UniTask.SwitchToMainThread();
         }
 
@@ -86,13 +85,13 @@ namespace Mirror.Websocket.Client
             try
             {
                 client.Connect(uri.Host, uri.Port);
-
                 // add ssl if needed
                 stream = ClientSslHelper.CreateStream(client.GetStream(), uri);
                 ClientHandshake.Handshake(stream, uri);
             }
             catch (Exception e)
             {
+                Debug.LogException(e);
                 client?.Close();
                 connectCompletionSource.TrySetException(e);
                 throw;
@@ -124,6 +123,10 @@ namespace Mirror.Websocket.Client
                 buffer.SetLength(0);
                 receiveMsg.WriteTo(buffer);
                 return 0;
+            }
+            catch (OperationCanceledException)
+            {
+                throw new EndOfStreamException();
             }
             catch (ChannelClosedException)
             {
