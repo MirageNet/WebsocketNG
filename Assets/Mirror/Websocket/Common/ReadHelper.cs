@@ -41,6 +41,10 @@ namespace Mirror.Websocket
                     throw new EndOfStreamException();
                 return (byte)value;
             }
+            catch (IOException)
+            {
+                throw new EndOfStreamException();
+            }
             catch (SocketException)
             {
                 throw new EndOfStreamException();
