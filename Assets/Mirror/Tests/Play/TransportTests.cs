@@ -185,7 +185,7 @@ namespace Mirror.Tests
             }
             catch (EndOfStreamException)
             {
-                // good ot go
+                // good to go
             }
         });
 
