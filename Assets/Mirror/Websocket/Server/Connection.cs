@@ -94,6 +94,10 @@ namespace Mirror.Websocket.Server
             {
                 throw new EndOfStreamException();
             }
+            finally
+            {
+                await UniTask.SwitchToMainThread();
+            }
         }
 
         public UniTask SendAsync(ArraySegment<byte> segment, int channel = 0)
