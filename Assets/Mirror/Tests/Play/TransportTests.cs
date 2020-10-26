@@ -64,8 +64,8 @@ namespace Mirror.Tests
             {
                 // make sure we are done accepting,
                 // the transport might take a little bit of time to disconnect
-                while (true)
-                    await transport.AcceptAsync();
+                while (await transport.AcceptAsync() != null) ;
+                    
             }
             catch (Exception)
             {
