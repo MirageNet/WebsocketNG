@@ -108,11 +108,11 @@ namespace Mirror.Websocket
 
         internal static void ToggleMask(byte[] src, int srcOffset, int messageLength, uint mask)
         {
-            int maskIndex = 3 * 8;
+            int maskIndex = 3;
             for (int i = 0; i < messageLength; i++)
             {
-                byte maskByte = (byte)(mask >> maskIndex);
-                maskIndex = (maskIndex - 8) & 0x3;
+                byte maskByte = (byte)(mask >> (maskIndex * 8) );
+                maskIndex = (maskIndex - 1) & 0x3;
                 src[srcOffset + i] = (byte)(src[srcOffset + i] ^ maskByte);
             }
         }
