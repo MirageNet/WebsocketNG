@@ -41,19 +41,23 @@ namespace Mirror.Websocket
         #region Server
         WebSocketServer server;
 
-        public override UniTask<IConnection> AcceptAsync()
+        public async override UniTask<IConnection> AcceptAsync()
         {
             if (Application.platform == RuntimePlatform.WebGLPlayer)
                 throw new PlatformNotSupportedException("Server mode is not supported in webgl");
 
             try
             {
-                return server.AcceptAsync();
+                return await server.AcceptAsync();
             }
             catch (ObjectDisposedException)
             {
                 // expected,  the connection was closed
-                return UniTask.FromResult<IConnection>(null);
+                return null;
+            }
+            finally
+            {
+                await UniTask.SwitchToMainThread();
             }
         }
 
