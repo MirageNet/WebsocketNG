@@ -1,9 +1,6 @@
-using System;
 using System.IO;
 using System.Net.WebSockets;
-using System.Security.Cryptography;
 using System.Text;
-using UnityEngine;
 
 namespace Mirror.Websocket.Server
 {
@@ -70,6 +67,7 @@ namespace Mirror.Websocket.Server
                 "HTTP/1.1 101 Switching Protocols\r\n" +
                 "Connection: Upgrade\r\n" +
                 "Upgrade: websocket\r\n" +
+                "Sec-WebSocket-Protocol: binary\r\n" +
                 "Sec-WebSocket-Accept: {0}\r\n\r\n",
                 keyHash);
 
