@@ -17,16 +17,10 @@ namespace Mirror.Websocket.Server
 
         Stream CreateStream(NetworkStream stream)
         {
-            var sslStream = new SslStream(stream, true, acceptClient);
+            var sslStream = new SslStream(stream, true);
             sslStream.AuthenticateAsServer(certificate, false, SslProtocols.Tls12, false);
 
             return sslStream;
-        }
-
-        bool acceptClient(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-        {
-            // always accept client
-            return true;
         }
     }
 }
