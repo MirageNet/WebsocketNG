@@ -88,7 +88,6 @@ var LibraryWebSockets = {
 
 	SocketSend: function (socketInstance, ptr, length)
 	{
-		console.log("Sending bytes" + length);
 		var socket = webSocketInstances[socketInstance];
 		socket.send (HEAPU8.buffer.slice(ptr, ptr+length));
 	},
