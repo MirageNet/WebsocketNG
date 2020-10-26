@@ -112,7 +112,7 @@ namespace Mirror.Websocket
             for (int i = 0; i < messageLength; i++)
             {
                 byte maskByte = (byte)(mask >> maskIndex);
-                maskIndex = (maskIndex - 8) & 0x4;
+                maskIndex = (maskIndex - 8) & 0x3;
                 src[srcOffset + i] = (byte)(src[srcOffset + i] ^ maskByte);
             }
         }
