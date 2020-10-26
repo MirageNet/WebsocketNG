@@ -55,6 +55,10 @@ namespace Mirror.Websocket
                 // expected,  the connection was closed
                 return null;
             }
+            catch (ChannelClosedException)
+            {
+                return null;
+            }
             finally
             {
                 await UniTask.SwitchToMainThread();
