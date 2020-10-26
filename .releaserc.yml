@@ -4,14 +4,14 @@
         "@semantic-release/release-notes-generator", 
         "@semantic-release/commit-analyzer",
         ["@semantic-release/changelog", {
-            "changelogFile": "Assets/Mirror/CHANGELOG.md",
+            "changelogFile": "Assets/Mirror/Websocket/CHANGELOG.md",
         }],
         ["@semantic-release/npm", {
             "npmPublish": false,
-            "pkgRoot": "Assets/Mirror"
+            "pkgRoot": "Assets/Mirror/Websocket"
         }],
         ["@semantic-release/git", {
-            "assets": ["Assets/Mirror/package.json", "Assets/Mirror/CHANGELOG.md"],
+            "assets": ["Assets/Mirror/Websocket/package.json", "Assets/Mirror/Websocket/CHANGELOG.md"],
             "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }],
     ]

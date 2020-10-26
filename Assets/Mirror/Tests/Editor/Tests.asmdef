@@ -6,7 +6,8 @@
         "MirrorNG_Websocket",
         "Mirror",
         "UniTask",
-        "UniTask.Linq"
+        "UniTask.Linq",
+        "WebsocketNG"
     ],
     "includePlatforms": [
         "Editor"
