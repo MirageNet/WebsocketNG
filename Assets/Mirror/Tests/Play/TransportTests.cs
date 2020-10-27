@@ -15,21 +15,19 @@ using System.Threading;
 
 namespace Mirror.Tests
 {
-    [TestFixture(typeof(WsTransport), new[] { "ws", "wss" }, "ws://localhost", 7778)]
+    [TestFixture("ws://localhost", 7778)]
     [Timeout(10000)]
-    public class AsyncTransportTests<T> where T : Transport
+    public class AsyncTransportTests
     {
         #region SetUp
 
-        private T transport;
+        private WsTransport transport;
         private GameObject transportObj;
         private readonly Uri uri;
         private readonly int port;
-        private readonly string[] scheme;
 
-        public AsyncTransportTests(string[] scheme, string uri, int port)
+        public AsyncTransportTests(string uri, int port)
         {
-            this.scheme = scheme;
             this.uri = new Uri(uri);
             this.port = port;
         }
@@ -42,7 +40,7 @@ namespace Mirror.Tests
         {
             transportObj = new GameObject();
 
-            transport = transportObj.AddComponent<T>();
+            transport = transportObj.AddComponent<WsTransport>();
 
             await transport.ListenAsync();
             UniTask<IConnection> connectTask = transport.ConnectAsync(uri);
@@ -219,7 +217,7 @@ namespace Mirror.Tests
         [Test]
         public void TestScheme()
         {
-            Assert.That(transport.Scheme, Is.EquivalentTo(scheme));
+            Assert.That(transport.Scheme, Is.EquivalentTo(new[] { "ws", "wss" }));
         }
     }
 }

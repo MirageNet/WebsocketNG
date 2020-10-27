@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using Cysharp.Threading.Tasks;
 using Mirror.Websocket.Client;
 using Mirror.Websocket.Server;
@@ -16,27 +17,14 @@ namespace Mirror.Websocket
 
         public override IEnumerable<string> Scheme => new[] { "ws", "wss" };
 
-        [Tooltip("Protect against allocation attacks by keeping the max message size small. Otherwise an attacker might send multiple fake packets with 2GB headers, causing the server to run out of memory after allocating multiple large packets.")]
-        public int maxMessageSize = 16 * 1024;
-
         [Tooltip("disables nagle algorithm. lowers CPU% and latency but increases bandwidth")]
         public bool noDelay = true;
 
-        [Tooltip("Send would stall forever if the network is cut off during a send, so we need a timeout (in milliseconds)")]
-        public int sendTimeout = 5000;
-
-        [Tooltip("How long without a message before disconnecting (in milliseconds)")]
-        public int receiveTimeout = 20000;
-
-        [Tooltip("Caps the number of messages the server will process per tick. Allows LateUpdate to finish to let the reset of unity contiue incase more messages arrive before they are processed")]
-        public int serverMaxMessagesPerTick = 10000;
-
-        [Tooltip("Caps the number of messages the client will process per tick. Allows LateUpdate to finish to let the reset of unity contiue incase more messages arrive before they are processed")]
-        public int clientMaxMessagesPerTick = 1000;
-
-
         // supported in all platforms
         public override bool Supported => true;
+
+        // if specified the server does wss
+        public X509Certificate2 certificate;
 
         #region Server
         WebSocketServer server;
@@ -77,8 +65,7 @@ namespace Mirror.Websocket
             if (Application.platform == RuntimePlatform.WebGLPlayer)
                 throw new PlatformNotSupportedException("Server mode is not supported in webgl");
 
-            // TODO: configure ssl
-            server = new WebSocketServer(maxMessageSize, default);
+            server = new WebSocketServer(certificate);
 
             server.Listen(Port);
 

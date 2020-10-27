@@ -2,7 +2,9 @@
 using System.Collections.Concurrent;
 using System.IO;
 using System.Net;
+using System.Net.Security;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
@@ -23,10 +25,20 @@ namespace Mirror.Websocket.Server
         private readonly TcpClient client;
         readonly Stream stream;
 
-        public Connection(TcpClient client)
+        public Connection(TcpClient client, X509Certificate2 certificate)
         {
             this.client = client;
-            stream = client.GetStream();
+            stream = GetStream(client, certificate);
+        }
+
+        private Stream GetStream(TcpClient client, X509Certificate2 certificate)
+        {
+            if (certificate is null)
+                return client.GetStream();
+
+            var sslStream = new SslStream(stream, true);
+            sslStream.AuthenticateAsServer(certificate);
+            return sslStream;
         }
 
         public void Handshake()

@@ -1,5 +1,6 @@
 using System;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -11,13 +12,13 @@ namespace Mirror.Websocket.Server
     public class WebSocketServer
     {
         private readonly Channel<IConnection> acceptQueue = UniTaskChannel.CreateSingleConsumerUnbounded<IConnection>();
-        private readonly int maxMessageSize;
 
         TcpListener listener;
+        private readonly X509Certificate2 certificate;
 
-        public WebSocketServer(int maxMessageSize, SslConfig sslConfig)
+        public WebSocketServer(X509Certificate2 certificate)
         {
-            this.maxMessageSize = maxMessageSize;
+            this.certificate = certificate;
         }
 
         public void Listen(int port)
@@ -55,7 +56,7 @@ namespace Mirror.Websocket.Server
                 {
                     TcpClient client = listener.AcceptTcpClient();
 
-                    var conn = new Connection(client);
+                    var conn = new Connection(client, certificate);
 
                     // handshake needs its own thread as it needs to wait for message from client
                     var receiveThread = new Thread(() => HandshakeAndReceiveLoop(conn));
