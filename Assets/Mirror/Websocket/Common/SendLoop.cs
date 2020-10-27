@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Threading;
 
@@ -22,6 +23,10 @@ namespace Mirror.Websocket
                 }
             }
             catch (OperationCanceledException)
+            {
+                // fine, someone stopped the connection
+            }
+            catch (SocketException)
             {
                 // fine, someone stopped the connection
             }
