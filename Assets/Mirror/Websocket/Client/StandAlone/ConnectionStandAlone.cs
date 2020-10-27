@@ -132,6 +132,10 @@ namespace Mirror.Websocket.Client
             {
                 throw new EndOfStreamException();
             }
+            finally
+            {
+                await UniTask.SwitchToMainThread();
+            }
         }
 
         public EndPoint GetEndPointAddress()
