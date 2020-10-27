@@ -1,7 +1,7 @@
 {
     "name": "com.mirrorng.websocket",
     "displayName": "MirrorNG Websocket",
-    "version": "1.0.2",
+    "version": "2.0.0",
     "unity": "2019.1",
     "description": "Websocket transport for MirrorNG",
     "author": "Paul Pacheco",
