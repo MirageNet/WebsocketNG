@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/MirrorNG/WebsocketNG/compare/v1.0.2...v2.0.0) (2020-10-27)
+
+
+* fix issue with metadata ([e00816a](https://github.com/MirrorNG/WebsocketNG/commit/e00816a6cab3dea79d320997507ce5dd2f0a6f63))
+
+
+### BREAKING CHANGES
+
+* Rewritten websocket for performance and simplicity
+
 ## [1.0.2](https://github.com/MirrorNG/WebsocketNG/compare/v1.0.1...v1.0.2) (2020-10-27)
 
 
