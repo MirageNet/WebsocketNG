@@ -58,10 +58,10 @@ namespace Mirror.Websocket
         {
             int msgLength = data.Count;
             var buffer = new MemoryStream(data.Count + 16);
-            const byte byte0 = MessageParser.FINISH_BIT | MessageParser.OPCODE_BINARY;
+            const byte byte0 = Parser.FINISH_BIT | Parser.OPCODE_BINARY;
 
             buffer.WriteByte(byte0);
-            byte maskbit = masked ? MessageParser.MASK_BIT : (byte)0;
+            byte maskbit = masked ? Parser.MASK_BIT : (byte)0;
 
             // write length,  3 possible formats
             if (msgLength < 126)
@@ -104,7 +104,7 @@ namespace Mirror.Websocket
 
             if (masked)
             {
-                MessageParser.ToggleMask(buffer.GetBuffer(), (int)position, data.Count, mask);
+                Parser.ToggleMask(buffer.GetBuffer(), (int)position, data.Count, mask);
             }
             return buffer;
         }

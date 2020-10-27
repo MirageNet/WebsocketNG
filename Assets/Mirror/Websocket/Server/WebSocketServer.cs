@@ -1,9 +1,7 @@
-using System;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace Mirror.Websocket.Server
 {
@@ -26,7 +24,7 @@ namespace Mirror.Websocket.Server
             listener = TcpListener.Create(port);
             listener.Start();
 
-            var acceptThread = new Thread(acceptLoop)
+            var acceptThread = new Thread(AcceptLoop)
             {
                 IsBackground = true
             };
@@ -48,7 +46,7 @@ namespace Mirror.Websocket.Server
             listener?.Stop();
         }
 
-        void acceptLoop()
+        void AcceptLoop()
         {
             try
             {
@@ -59,8 +57,10 @@ namespace Mirror.Websocket.Server
                     var conn = new Connection(client, certificate);
 
                     // handshake needs its own thread as it needs to wait for message from client
-                    var receiveThread = new Thread(() => HandshakeAndReceiveLoop(conn));
-                    receiveThread.IsBackground = true;
+                    var receiveThread = new Thread(() => HandshakeAndReceiveLoop(conn))
+                    {
+                        IsBackground = true
+                    };
                     receiveThread.Start();
                 }
 

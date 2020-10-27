@@ -8,17 +8,19 @@ namespace Mirror.Websocket
         internal bool finished;
         internal bool masked;
         internal int opcode;
-        internal long length;
         internal uint mask;
+        internal long length;
     }
 
-    public static class MessageParser
+    public static class Parser
     {
         public const byte OPCODE_BINARY = 2;
         public const byte OPCODE_CLOSE = 8;
+        public const byte OPCODE_MASK = 0b0000_1111;
 
         public const byte FINISH_BIT = 0b1000_0000;
         public const byte MASK_BIT = 0b1000_0000;
+        public const byte LENGTH_MASK = 0b0111_1111;
 
         // lets do 100Kb max
         const int MaxMessageSize = 100_000;
@@ -47,13 +49,13 @@ namespace Mirror.Websocket
             byte byte0 = stream.ReadOneByte();
 
             bool finished = (byte0 & FINISH_BIT) != 0;
-            int opcode = (byte0 & 0b0000_1111);
+            int opcode = byte0 & OPCODE_MASK;
 
             byte byte1 = stream.ReadOneByte();
 
             bool masked = (byte1 & MASK_BIT) != 0;
 
-            long length = byte1 & 0b0111_1111;
+            long length = byte1 & LENGTH_MASK;
 
             if (length == 126)
             {

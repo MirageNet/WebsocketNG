@@ -59,7 +59,7 @@ namespace Mirror.Websocket.Client
 
                 while (true)
                 {
-                    MemoryStream message = MessageParser.ReadOneMessage(stream);
+                    MemoryStream message = Parser.ReadOneMessage(stream);
                     receiveQueue.Writer.TryWrite(message);
                 }
             }
