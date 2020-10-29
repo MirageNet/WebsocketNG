@@ -43,4 +43,4 @@ openssl x509 -req -in ServerCert_signedByCAIntermediary.csr -CA CA.pem -CAkey CA
 openssl x509 -text -noout -in ServerCert_signedByCAIntermediary.crt
 
 #Package in a pfx
-openssl pkcs12 -export -out ServerCert_signedByCAIntermediary.pfx -inkey ServerCert_signedByCAIntermediary.key -in ServerCert_signedByCAIntermediary.crt -passout "pass:password"
+openssl pkcs12 -export -out ServerCert_signedByCAIntermediary.pfx -inkey ServerCert_signedByCAIntermediary.key -in ServerCert_signedByCAIntermediary.crt -passout "pass:password" -certfile CA_Intermediary.crt
