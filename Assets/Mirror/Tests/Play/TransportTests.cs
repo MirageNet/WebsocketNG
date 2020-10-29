@@ -17,7 +17,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace Mirror.Tests
 {
     [TestFixture("ws://localhost", 7778, null)]
-    [TestFixture("wss://localhost", 7778, "Assets/Mirror/Tests/server-cert.pfx")]
+    [TestFixture("wss://localhost", 7778, "Assets/Mirror/Tests/cert/localhost.pfx")]
     [Timeout(10000)]
     public class AsyncTransportTests
     {
@@ -52,8 +52,9 @@ namespace Mirror.Tests
             {
                 store.Open(OpenFlags.ReadWrite);
 
-                var certificate = new X509Certificate2("Assets/Mirror/Tests/CA-cert.pem");
-                store.Add(certificate);
+                // trust the generated CA
+                var cacert = new X509Certificate2("Assets/Mirror/Tests/cert/CA.pem");
+                store.Add(cacert);
             };
 
             await transport.ListenAsync();
@@ -62,6 +63,7 @@ namespace Mirror.Tests
 
             clientConnection = await connectTask;
             serverConnection = await acceptTask;
+
         });
 
 

@@ -23,8 +23,11 @@ namespace Mirror.Websocket
         // supported in all platforms
         public override bool Supported => true;
 
-        // if specified the server does wss
-        public X509Certificate2 certificate;
+        [Tooltip("The name of the file containing a pfx certificate for the server (i.e. certificate.pfx)")]
+        public string CertificateName;
+
+        [Tooltip("The passphrase for the certificate,  use $MYVARIABLE to read an environment variable")]
+        public string Passphrase;
 
         #region Server
         WebSocketServer server;
@@ -65,11 +68,46 @@ namespace Mirror.Websocket
             if (Application.platform == RuntimePlatform.WebGLPlayer)
                 throw new PlatformNotSupportedException("Server mode is not supported in webgl");
 
-            server = new WebSocketServer(certificate);
+            if (string.IsNullOrEmpty(CertificateName) )
+            {
+                server = new WebSocketServer(null);
+            }
+
+            else
+            {
+                // try loading the certificate
+                X509Certificate2 certificate;
+
+                string passphrase = GetPassphrase();
+
+                if (passphrase == null)
+                    certificate = new X509Certificate2(CertificateName);
+                else
+                    certificate = new X509Certificate2(CertificateName, passphrase);
+
+                X509Chain chain = X509Chain.Create();
+
+                chain.Build(certificate);
+
+                server = new WebSocketServer(certificate);
+            }
 
             server.Listen(Port);
 
             return UniTask.CompletedTask;
+        }
+
+        private string GetPassphrase()
+        {
+            if (string.IsNullOrEmpty(Passphrase))
+                return null;
+
+            if (Passphrase.StartsWith("$"))
+            {
+                return Environment.GetEnvironmentVariable(Passphrase.Substring(1));
+            }
+
+            return Passphrase;
         }
 
         public override IEnumerable<Uri> ServerUri()
@@ -81,7 +119,7 @@ namespace Mirror.Websocket
             {
                 Host = Dns.GetHostName(),
                 Port = Port,
-                Scheme = "ws"
+                Scheme = string.IsNullOrEmpty(CertificateName) ? "ws" : "wss"
             };
 
             return new[] { builder.Uri };

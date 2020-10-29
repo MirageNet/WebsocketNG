@@ -159,12 +159,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Port: 7778
-  maxMessageSize: 16384
   noDelay: 1
-  sendTimeout: 5000
-  receiveTimeout: 20000
-  serverMaxMessagesPerTick: 10000
-  clientMaxMessagesPerTick: 1000
+  CertificateName: Assets/Mirror/Tests/cert/localhost.pfx
+  Passphrase: password
 --- !u!114 &249891955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   server: {fileID: 249891959}
   client: {fileID: 249891958}
+  sceneManager: {fileID: 0}
 --- !u!4 &249891957
 Transform:
   m_ObjectHideFlags: 0

@@ -19,6 +19,10 @@ namespace Mirror.Websocket.Server
             this.certificate = certificate;
         }
 
+        public WebSocketServer()
+        {
+        }
+
         public void Listen(int port)
         {
             listener = TcpListener.Create(port);

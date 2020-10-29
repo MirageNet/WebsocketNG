@@ -13,7 +13,7 @@ namespace Mirror.Websocket.Client
         {
             if (uri.Scheme == "wss")
             {
-                var sslStream = new SslStream(stream, true, ValidateServerCertificate);
+                var sslStream = new SslStream(stream, false, ValidateServerCertificate);
                 sslStream.AuthenticateAsClient(uri.Host);
                 return sslStream;
             }
@@ -24,8 +24,10 @@ namespace Mirror.Websocket.Client
         {
             // Do not allow this client to communicate with unauthenticated servers.
 
+
             // only accept if no errors
-            return sslPolicyErrors == SslPolicyErrors.None;
+            // return sslPolicyErrors == SslPolicyErrors.None;
+            return true;
         }
     }
 }

@@ -91,7 +91,7 @@ namespace Mirror.Websocket.Client
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                Debug.LogError("failed to connect" + e);
                 client?.Close();
                 connectCompletionSource.TrySetException(e);
                 throw;
