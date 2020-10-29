@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Net.WebSockets;
@@ -40,6 +41,10 @@ namespace Mirror.Websocket
                 if (value < 0)
                     throw new EndOfStreamException();
                 return (byte)value;
+            }
+            catch (ObjectDisposedException)
+            {
+                throw new EndOfStreamException();
             }
             catch (IOException)
             {
