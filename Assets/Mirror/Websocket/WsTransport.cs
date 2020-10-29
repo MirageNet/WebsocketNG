@@ -87,10 +87,6 @@ namespace Mirror.Websocket
                 else
                     certificate = new X509Certificate2(CertificateName, passphrase);
 
-                X509Chain chain = X509Chain.Create();
-
-                chain.Build(certificate);
-
                 server = new WebSocketServer(certificate);
             }
 

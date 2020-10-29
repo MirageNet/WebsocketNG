@@ -55,6 +55,10 @@ namespace Mirror.Tests
                 // trust the generated CA
                 var cacert = new X509Certificate2("Assets/Mirror/Tests/cert/CA.pem");
                 store.Add(cacert);
+
+                var caintermediate = new X509Certificate2("Assets/Mirror/Tests/cert/CA_Intermediary.crt");
+                store.Add(caintermediate);
+
             }
 
             await transport.ListenAsync();
