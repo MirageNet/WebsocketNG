@@ -48,7 +48,7 @@ namespace Mirror.Websocket.Client
                 store.Open(OpenFlags.ReadOnly);
 
                 // get the last certificate in the chain
-                var rootCert = chain.ChainElements[chain.ChainElements.Count - 1];
+                X509ChainElement rootCert = chain.ChainElements[chain.ChainElements.Count - 1];
 
                 // and check if we trust it
 
