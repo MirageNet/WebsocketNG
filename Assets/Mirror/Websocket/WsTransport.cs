@@ -25,11 +25,11 @@ namespace Mirror.Websocket
 
         [Tooltip("The name of the file containing a pfx certificate for the server (i.e. certificate.pfx)")]
         [SerializeField]
-        private string CertificateName;
+        internal string CertificateName;
 
         [Tooltip("The passphrase for the certificate,  use $MYVARIABLE to read an environment variable")]
         [SerializeField]
-        private string Passphrase;
+        internal string Passphrase;
 
         #region Server
         WebSocketServer server;

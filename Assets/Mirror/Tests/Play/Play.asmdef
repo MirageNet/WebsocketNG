@@ -1,5 +1,5 @@
 {
-    "name": "Play",
+    "name": "Mirror.Test.Play",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
