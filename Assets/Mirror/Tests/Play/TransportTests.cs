@@ -55,7 +55,7 @@ namespace Mirror.Tests
                 // trust the generated CA
                 var cacert = new X509Certificate2("Assets/Mirror/Tests/cert/CA.pem");
                 store.Add(cacert);
-            };
+            }
 
             await transport.ListenAsync();
             UniTask<IConnection> connectTask = transport.ConnectAsync(uri);

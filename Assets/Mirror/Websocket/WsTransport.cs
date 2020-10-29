@@ -24,10 +24,12 @@ namespace Mirror.Websocket
         public override bool Supported => true;
 
         [Tooltip("The name of the file containing a pfx certificate for the server (i.e. certificate.pfx)")]
-        public string CertificateName;
+        [SerializeField]
+        private string CertificateName;
 
         [Tooltip("The passphrase for the certificate,  use $MYVARIABLE to read an environment variable")]
-        public string Passphrase;
+        [SerializeField]
+        private string Passphrase;
 
         #region Server
         WebSocketServer server;
