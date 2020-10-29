@@ -1,21 +1,22 @@
 #!/bin/bash
 
-# https://community.axway.com/s/question/0D52X000065Ykx2SAC/example-scripts-to-create-certificate-chain-with-openssl
+# https://jamielinux.com/docs/openssl-certificate-authority/sign-server-and-client-certificates.html
 
 echo Generate CA Certificate
 
 #Generate private Key
 openssl genrsa -out CA.key 2048
 
-#Generate CA CSR
+#Generate CA Certificate (100 years)
 openssl req -config openssl.cnf \
     -key CA.key \
     -new -sha256 -x509 -extensions v3_ca \
     -subj "/C=US/ST=Texas/O=MirrorNG/CN=MIRRORNG CA" \
     -out CA.pem 
-    
-#Generate CA Certificate (100 years)
 
+# clear database
+echo -n > index.txt
+echo "1000" > serial
 #--------------------------------------------------------------------------------------
 
 echo Generate Intermediary CA Certificate
@@ -55,7 +56,7 @@ openssl req -config openssl.cnf \
     -subj "/C=US/ST=Texas/O=MirrorNG/CN=localhost"
 
 #Generate Server Certificate
-openssl ca -config openssl.cnf \
+openssl ca -config openssl_int.cnf \
     -extensions server_cert \
     -days 36500 \
     -notext \
