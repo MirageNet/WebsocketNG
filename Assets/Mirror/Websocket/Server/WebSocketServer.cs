@@ -1,15 +1,16 @@
+using System;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine.Events;
 
 namespace Mirror.Websocket.Server
 {
-    using UniTaskChannel = Cysharp.Threading.Tasks.Channel;
-
     public class WebSocketServer
     {
-        private readonly Channel<IConnection> acceptQueue = UniTaskChannel.CreateSingleConsumerUnbounded<IConnection>();
+        internal Transport.ConnectEvent Connected = new Transport.ConnectEvent();
+        internal UnityEvent Started = new UnityEvent();
 
         TcpListener listener;
         private readonly X509Certificate2 certificate;
@@ -23,26 +24,33 @@ namespace Mirror.Websocket.Server
         {
         }
 
-        public void Listen(int port)
-        {
-            listener = TcpListener.Create(port);
-            listener.Start();
+        AutoResetUniTaskCompletionSource listenCompletion;
 
-            var acceptThread = new Thread(AcceptLoop)
+        public async UniTask Listen(int port)
+        {
+            try
             {
-                IsBackground = true
-            };
-            acceptThread.Start();
-        }
 
-        public async UniTask<IConnection> AcceptAsync()
-        {
-            IConnection connection = await acceptQueue.Reader.ReadAsync();
+                listener = TcpListener.Create(port);
+                listener.Start();
 
-            // switch to main thread
-            await UniTask.SwitchToMainThread();
+                listenCompletion = AutoResetUniTaskCompletionSource.Create();
+                var acceptThread = new Thread(AcceptLoop)
+                {
+                    IsBackground = true
+                };
+                acceptThread.Start();
 
-            return connection;
+                Started.Invoke();
+
+                await listenCompletion.Task;
+
+                await UniTask.SwitchToMainThread();
+            }
+            finally
+            {
+                listener?.Stop();
+            }
         }
 
         public void Stop()
@@ -73,10 +81,13 @@ namespace Mirror.Websocket.Server
             {
                 // fine,  someone stopped the connection
             }
+            catch (Exception ex)
+            {
+                listenCompletion.TrySetException(ex);
+            }
             finally
             {
-                acceptQueue.Writer.TryComplete();
-                listener?.Stop();
+                listenCompletion.TrySetResult();
             }
 
         }
@@ -85,9 +96,15 @@ namespace Mirror.Websocket.Server
         {
             conn.Handshake();
 
-            acceptQueue.Writer.TryWrite(conn);
+            NotifyAccept(conn).Forget();
 
             conn.SendAndReceive();
+        }
+
+        private async UniTaskVoid NotifyAccept(Connection conn)
+        {
+            await UniTask.SwitchToMainThread();
+            Connected.Invoke(conn);
         }
     }
 }

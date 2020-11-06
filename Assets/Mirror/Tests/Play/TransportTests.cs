@@ -39,6 +39,8 @@ namespace Mirror.Tests
         IConnection clientConnection;
         IConnection serverConnection;
 
+        UniTask listenTask;
+
         [UnitySetUp]
         public IEnumerator Setup() => UniTask.ToCoroutine(async () =>
         {
@@ -61,12 +63,13 @@ namespace Mirror.Tests
 
             }
 
-            await transport.ListenAsync();
-            UniTask<IConnection> connectTask = transport.ConnectAsync(uri);
-            UniTask<IConnection> acceptTask = transport.AcceptAsync();
+            transport.Connected.AddListener((connection) =>
+                serverConnection = connection);
 
-            clientConnection = await connectTask;
-            serverConnection = await acceptTask;
+            listenTask = transport.ListenAsync();
+            clientConnection = await transport.ConnectAsync(uri);
+
+            await UniTask.WaitUntil(() => serverConnection != null);
 
         });
 
@@ -78,17 +81,7 @@ namespace Mirror.Tests
             serverConnection.Disconnect();
             transport.Disconnect();
 
-            try
-            {
-                // make sure we are done accepting,
-                // the transport might take a little bit of time to disconnect
-                while (await transport.AcceptAsync() != null) ;
-                    
-            }
-            catch (Exception)
-            {
-                // fine,  just wait until it is done
-            }
+            await listenTask;
 
             Object.Destroy(transportObj);
         });

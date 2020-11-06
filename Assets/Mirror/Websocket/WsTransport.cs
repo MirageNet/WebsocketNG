@@ -34,30 +34,6 @@ namespace Mirror.Websocket
         #region Server
         WebSocketServer server;
 
-        public override async UniTask<IConnection> AcceptAsync()
-        {
-            if (Application.platform == RuntimePlatform.WebGLPlayer)
-                throw new PlatformNotSupportedException("Server mode is not supported in webgl");
-
-            try
-            {
-                return await server.AcceptAsync();
-            }
-            catch (ObjectDisposedException)
-            {
-                // expected,  the connection was closed
-                return null;
-            }
-            catch (ChannelClosedException)
-            {
-                return null;
-            }
-            finally
-            {
-                await UniTask.SwitchToMainThread();
-            }
-        }
-
         public override void Disconnect()
         {
             if (Application.platform == RuntimePlatform.WebGLPlayer)
@@ -90,9 +66,10 @@ namespace Mirror.Websocket
                 server = new WebSocketServer(certificate);
             }
 
-            server.Listen(Port);
+            server.Connected.AddListener(c => Connected.Invoke(c));
+            server.Started.AddListener(() => Started.Invoke());
 
-            return UniTask.CompletedTask;
+            return server.Listen(Port);
         }
 
         private string GetPassphrase()
@@ -135,8 +112,6 @@ namespace Mirror.Websocket
                 };
                 uri = builder.Uri;
             }
-
-
 
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
