@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/MirrorNG/WebsocketNG/compare/v2.0.0...v2.0.1) (2020-10-29)
+
+
+### Bug Fixes
+
+* ObjectDisposedException ([3dd343f](https://github.com/MirrorNG/WebsocketNG/commit/3dd343fc86e4721e4149badcd7601eba16ce970b))
+
 # [2.0.0](https://github.com/MirrorNG/WebsocketNG/compare/v1.0.2...v2.0.0) (2020-10-27)
 
 
