@@ -12,10 +12,12 @@ using Mirror.Websocket;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Mirror.Tests
 {
-    [TestFixture("ws://localhost", 7778)]
+    [TestFixture("ws://localhost", 7778, null)]
+    [TestFixture("wss://localhost", 7778, "Assets/Mirror/Tests/cert/localhost.pfx")]
     [Timeout(10000)]
     public class AsyncTransportTests
     {
@@ -25,15 +27,19 @@ namespace Mirror.Tests
         private GameObject transportObj;
         private readonly Uri uri;
         private readonly int port;
+        private readonly string certificate;
 
-        public AsyncTransportTests(string uri, int port)
+        public AsyncTransportTests(string uri, int port, string certificate)
         {
             this.uri = new Uri(uri);
             this.port = port;
+            this.certificate = certificate;
         }
 
         IConnection clientConnection;
         IConnection serverConnection;
+
+        UniTask listenTask;
 
         [UnitySetUp]
         public IEnumerator Setup() => UniTask.ToCoroutine(async () =>
@@ -41,13 +47,30 @@ namespace Mirror.Tests
             transportObj = new GameObject();
 
             transport = transportObj.AddComponent<WsTransport>();
+            transport.CertificateName = certificate;
+            transport.Passphrase = "password";
 
-            await transport.ListenAsync();
-            UniTask<IConnection> connectTask = transport.ConnectAsync(uri);
-            UniTask<IConnection> acceptTask = transport.AcceptAsync();
+            using(var store = new X509Store(StoreName.Root, StoreLocation.CurrentUser))
+            {
+                store.Open(OpenFlags.ReadWrite);
 
-            clientConnection = await connectTask;
-            serverConnection = await acceptTask;
+                // trust the generated CA
+                var cacert = new X509Certificate2("Assets/Mirror/Tests/cert/CA.pem");
+                store.Add(cacert);
+
+                var caintermediate = new X509Certificate2("Assets/Mirror/Tests/cert/CA_Intermediary.crt");
+                store.Add(caintermediate);
+
+            }
+
+            transport.Connected.AddListener((connection) =>
+                serverConnection = connection);
+
+            listenTask = transport.ListenAsync();
+            clientConnection = await transport.ConnectAsync(uri);
+
+            await UniTask.WaitUntil(() => serverConnection != null);
+
         });
 
 
@@ -58,17 +81,7 @@ namespace Mirror.Tests
             serverConnection.Disconnect();
             transport.Disconnect();
 
-            try
-            {
-                // make sure we are done accepting,
-                // the transport might take a little bit of time to disconnect
-                while (await transport.AcceptAsync() != null) ;
-                    
-            }
-            catch (Exception)
-            {
-                // fine,  just wait until it is done
-            }
+            await listenTask;
 
             Object.Destroy(transportObj);
         });

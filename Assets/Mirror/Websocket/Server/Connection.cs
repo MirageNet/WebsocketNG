@@ -36,10 +36,14 @@ namespace Mirror.Websocket.Server
             if (certificate is null)
                 return client.GetStream();
 
-            var sslStream = new SslStream(stream, true);
+            var sslStream = new SslStream(client.GetStream(), false, ServerCertValidation);
             sslStream.AuthenticateAsServer(certificate);
             return sslStream;
         }
+
+        // Server does not need to validate client or server certificate
+        // only the client needs to validate server cert
+        private bool ServerCertValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) => true;
 
         public void Handshake()
         {

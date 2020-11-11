@@ -13,7 +13,7 @@ namespace Mirror.Websocket.Client
         {
             if (uri.Scheme == "wss")
             {
-                var sslStream = new SslStream(stream, true, ValidateServerCertificate);
+                var sslStream = new SslStream(stream, false, ValidateServerCertificate);
                 sslStream.AuthenticateAsClient(uri.Host);
                 return sslStream;
             }
@@ -24,8 +24,38 @@ namespace Mirror.Websocket.Client
         {
             // Do not allow this client to communicate with unauthenticated servers.
 
-            // only accept if no errors
-            return sslPolicyErrors == SslPolicyErrors.None;
+            if (sslPolicyErrors == SslPolicyErrors.None)
+                return true;
+
+            if (sslPolicyErrors != SslPolicyErrors.RemoteCertificateChainErrors)
+                return false;
+
+            if (chain.ChainStatus.Length > 1)
+                return false;
+
+            X509ChainStatus chainStatus = chain.ChainStatus[0];
+
+            if (chainStatus.Status != X509ChainStatusFlags.UntrustedRoot)
+                return false;
+
+            // problem is untrusted root, let's check our local store
+
+
+            // let's check our own store for trusted certs
+            // note unity cannot read the system store
+            using (var store = new X509Store(StoreName.Root, StoreLocation.CurrentUser))
+            {
+                store.Open(OpenFlags.ReadOnly);
+
+                // get the last certificate in the chain
+                X509ChainElement rootCert = chain.ChainElements[chain.ChainElements.Count - 1];
+
+                // and check if we trust it
+
+                X509Certificate2Collection found = store.Certificates.Find(X509FindType.FindByThumbprint, rootCert.Certificate.Thumbprint, true);
+
+                return found.Count > 0;
+            }
         }
     }
 }
