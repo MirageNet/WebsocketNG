@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/MirrorNG/WebsocketNG/compare/v2.0.1...v2.1.0) (2020-11-11)
+
+
+### Features
+
+* Support encryption ([#6](https://github.com/MirrorNG/WebsocketNG/issues/6)) ([0c57681](https://github.com/MirrorNG/WebsocketNG/commit/0c576818c88306bd3a15958ad5ffc4c726acd0dd))
+
 ## [2.0.1](https://github.com/MirrorNG/WebsocketNG/compare/v2.0.0...v2.0.1) (2020-10-29)
 
 
