@@ -20,6 +20,10 @@ namespace Mirror.Websocket
                     MemoryStream msg = queue.Take(cancellationToken);
 
                     stream.Write(msg.GetBuffer(), 0, (int)msg.Length);
+                    
+                    if (queue.Count == 0) {
+                        stream.Flush();
+                    }
                 }
             }
             catch (OperationCanceledException)
