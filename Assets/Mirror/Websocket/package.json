@@ -10,7 +10,7 @@
         "url": "https://github.com/MirrorNG/MirrorNG_Websocket.git"
     },
     "dependencies": {
-        "com.mirrorng.mirrorng": "43.3.2",
+        "com.mirrorng.mirrorng": "59.0.0",
         "com.cysharp.unitask": "2.0.36"
     },
     "samples": [
