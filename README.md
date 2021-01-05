@@ -29,7 +29,7 @@ If you are using unity 2019.3 or later:
 2) Install [MirrorNG](https://github.com/MirrorNG/MirrorNG)
 3) Click on Windows -> Package Manager
 4) Click on the plus sign on the left and click on "Add package from git URL..."
-5) enter https://github.com/MirrorNG/MirrorNG_Websocket.git?path=/Assets/Mirror
+5) enter https://github.com/MirrorNG/MirrorNG_Websocket.git?path=/Assets/Mirror/Websocket
 6) Unity will download and install MirrorNG Websocket
 
 Alternatively you can download it from [Download Mirror](https://github.com/MirrorNG/MirrorNG_Websocket/releases).  You will need to install some dependencies yourself such as cecil.
