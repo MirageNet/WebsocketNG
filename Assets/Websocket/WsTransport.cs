@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using Cysharp.Threading.Tasks;
-using Mirror.Websocket.Client;
-using Mirror.Websocket.Server;
+using Mirage.Websocket.Client;
+using Mirage.Websocket.Server;
 using UnityEngine;
 
-namespace Mirror.Websocket
+namespace Mirage.Websocket
 {
 
     public class WsTransport : Transport

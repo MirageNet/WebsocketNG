@@ -11,7 +11,7 @@ openssl genrsa -out CA.key 2048
 openssl req -config openssl.cnf \
     -key CA.key \
     -new -sha256 -x509 -extensions v3_ca \
-    -subj "/C=US/ST=Texas/O=MirrorNG/CN=MIRRORNG CA" \
+    -subj "/C=US/ST=Texas/O=Mirage/CN=MIRRORNG CA" \
     -out CA.pem 
 
 openssl x509 -noout -text -in CA.pem
@@ -29,7 +29,7 @@ openssl genrsa -out CA_Intermediary.key 2048
 #Create Intermediary CA CSR
 openssl req -config openssl_int.cnf \
     -new -sha256 \
-    -subj "/C=US/ST=Texas/O=MirrorNG/CN=MIRRORNG INTERMEDIARY CA" \
+    -subj "/C=US/ST=Texas/O=Mirage/CN=MIRRORNG INTERMEDIARY CA" \
     -out CA_Intermediary.csr \
     -key CA_Intermediary.key \
 
@@ -61,7 +61,7 @@ openssl req -config openssl_int.cnf \
     -new -sha256 \
     -key localhost.key \
     -out localhost.csr \
-    -subj "/C=US/ST=Texas/O=MirrorNG/CN=localhost"
+    -subj "/C=US/ST=Texas/O=Mirage/CN=localhost"
 
 #Generate Server Certificate
 openssl ca -config openssl_int.cnf \

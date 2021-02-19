@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Mirror.Examples.Multiplex
+namespace Mirage.Examples.Multiplex
 {
     public class Player : NetworkBehaviour
     {

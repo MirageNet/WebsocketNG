@@ -5,7 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Events;
 
-namespace Mirror.Websocket.Server
+namespace Mirage.Websocket.Server
 {
     public class WebSocketServer
     {

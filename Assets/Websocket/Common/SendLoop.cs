@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Threading;
 
-namespace Mirror.Websocket
+namespace Mirage.Websocket
 {
     internal static class SendLoop
     {

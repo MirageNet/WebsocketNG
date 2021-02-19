@@ -8,7 +8,7 @@ using AOT;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Mirror.Websocket.Client
+namespace Mirage.Websocket.Client
 {
     using Channel = Cysharp.Threading.Tasks.Channel;
 

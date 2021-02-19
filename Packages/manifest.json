@@ -1,9 +1,10 @@
 {
   "dependencies": {
-    "com.mirrorng.mirrorng": "59.0.0",
-    "com.unity.ext.nunit": "1.0.0",
-    "com.unity.ide.visualstudio": "2.0.3",
-    "com.unity.ide.vscode": "1.2.2",
+    "com.miragenet.mirage": "67.0.1",
+    "com.mirrorng.mirrorng": "65.1.0",
+    "com.unity.ext.nunit": "1.0.5",
+    "com.unity.ide.visualstudio": "2.0.5",
+    "com.unity.ide.vscode": "1.2.3",
     "com.unity.test-framework.performance": "2.3.1-preview",
     "com.unity.testtools.codecoverage": "0.3.1-preview",
     "com.unity.ugui": "1.0.0",
@@ -45,7 +46,7 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "com.cysharp.unitask",
-        "com.mirrorng.mirrorng",
+        "com.miragenet",
         "com.openupm"
       ]
     }

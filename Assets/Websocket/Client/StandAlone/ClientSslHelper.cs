@@ -4,7 +4,7 @@ using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Mirror.Websocket.Client
+namespace Mirage.Websocket.Client
 {
     internal static class ClientSslHelper
     {

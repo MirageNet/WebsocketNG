@@ -8,16 +8,16 @@ using System.Net;
 
 using System;
 using Object = UnityEngine.Object;
-using Mirror.Websocket;
+using Mirage.Websocket;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Mirror.Tests
+namespace Mirage.Tests
 {
     [TestFixture("ws://localhost", 7778, null)]
-    [TestFixture("wss://localhost", 7778, "Assets/Mirror/Tests/cert/localhost.pfx")]
+    [TestFixture("wss://localhost", 7778, "Assets/Tests/cert/localhost.pfx")]
     [Timeout(10000)]
     public class AsyncTransportTests
     {
@@ -55,10 +55,10 @@ namespace Mirror.Tests
                 store.Open(OpenFlags.ReadWrite);
 
                 // trust the generated CA
-                var cacert = new X509Certificate2("Assets/Mirror/Tests/cert/CA.pem");
+                var cacert = new X509Certificate2("Assets/Tests/cert/CA.pem");
                 store.Add(cacert);
 
-                var caintermediate = new X509Certificate2("Assets/Mirror/Tests/cert/CA_Intermediary.crt");
+                var caintermediate = new X509Certificate2("Assets/Tests/cert/CA_Intermediary.crt");
                 store.Add(caintermediate);
 
             }

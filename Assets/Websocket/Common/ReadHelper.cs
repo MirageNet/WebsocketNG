@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Text;
 
-namespace Mirror.Websocket
+namespace Mirage.Websocket
 {
     public static class ReadHelper
     {

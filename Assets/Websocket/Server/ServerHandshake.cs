@@ -2,7 +2,7 @@ using System.IO;
 using System.Net.WebSockets;
 using System.Text;
 
-namespace Mirror.Websocket.Server
+namespace Mirage.Websocket.Server
 {
     /// <summary>
     /// Handles Handshakes from new clients on the server

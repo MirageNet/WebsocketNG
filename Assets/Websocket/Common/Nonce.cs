@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-namespace Mirror.Websocket
+namespace Mirage.Websocket
 {
     public static class Nonce
     {

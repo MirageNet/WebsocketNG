@@ -4,7 +4,7 @@ using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Mirror.Websocket.Client
+namespace Mirage.Websocket.Client
 {
     /// <summary>
     /// Handles Handshake to the server when it first connects

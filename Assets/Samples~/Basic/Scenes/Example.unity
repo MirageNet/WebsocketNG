@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Port: 7778
   noDelay: 1
-  CertificateName: Assets/Mirror/Tests/cert/localhost.pfx
+  CertificateName: Assets/Tests/cert/localhost.pfx
   Passphrase: password
 --- !u!114 &249891955
 MonoBehaviour:

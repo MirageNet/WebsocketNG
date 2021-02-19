@@ -1,7 +1,7 @@
 using System.IO;
 using System.Net.WebSockets;
 
-namespace Mirror.Websocket
+namespace Mirage.Websocket
 {
     struct MessageHeader
     {

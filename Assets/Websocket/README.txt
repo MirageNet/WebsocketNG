@@ -7,16 +7,16 @@ How to use:
 
 Requirements:
   Unity 2018.4 LTS
-  Mirror v18.0.0
+  Mirage v18.0.0
 
 Documentation:
   https://mirror-networking.com/docs/
-  https://github.com/MirrorNetworking/SimpleWebTransport/blob/master/README.md
+  https://github.com/MirageNetworking/SimpleWebTransport/blob/master/README.md
 
 Support:
   Discord: https://discordapp.com/invite/N9QVxbM
-  Bug Reports: https://github.com/MirrorNetworking/SimpleWebTransport/issues
+  Bug Reports: https://github.com/MirageNetworking/SimpleWebTransport/issues
 
 
 **To get most recent updates and fixes download from github**
-https://github.com/MirrorNetworking/SimpleWebTransport/releases
+https://github.com/MirageNetworking/SimpleWebTransport/releases

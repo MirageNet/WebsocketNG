@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Mirror.Websocket.Server
+namespace Mirage.Websocket.Server
 {
     using UniTaskChannel = Cysharp.Threading.Tasks.Channel;
 

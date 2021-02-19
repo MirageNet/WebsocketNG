@@ -1,12 +1,12 @@
 {
-    "name": "Mirror.Test.Play",
+    "name": "Mirage.Test.Play",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "MirrorNG",
+        "Mirage",
         "WebsocketNG",
         "UniTask",
-        "Mirror"
+        "Mirage"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
