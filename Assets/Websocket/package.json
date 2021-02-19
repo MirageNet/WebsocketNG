@@ -1,5 +1,5 @@
 {
-    "name": "com.mirrorng.websocket",
+    "name": "com.miragenet.websocket",
     "displayName": "Mirage Websocket",
     "version": "2.1.0",
     "unity": "2019.1",
@@ -10,7 +10,7 @@
         "url": "https://github.com/Mirage/Mirage_Websocket.git"
     },
     "dependencies": {
-        "com.mirrorng.mirrorng": "59.0.0",
+        "com.miragenet.mirage": "62.0.0",
         "com.cysharp.unitask": "2.0.36"
     },
     "samples": [

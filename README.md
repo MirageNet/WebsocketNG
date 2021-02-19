@@ -3,9 +3,9 @@
 [![Documentation](https://img.shields.io/badge/documentation-brightgreen.svg)](https://mirrorng.github.io/MirrorNG_Websocket/)
 [![Forum](https://img.shields.io/badge/forum-brightgreen.svg)](https://forum.unity.com/threads/mirror-networking-for-unity-aka-hlapi-community-edition.425437/)
 [![Discord](https://img.shields.io/discord/343440455738064897.svg)](https://discordapp.com/invite/N9QVxbM)
-[![release](https://img.shields.io/github/release/MirrorNG/MirrorNG_Websocket.svg)](https://github.com/MirrorNG/MirrorNG_Websocket/releases/latest)
+[![release](https://img.shields.io/github/release/MirageNet/MirrorNG_Websocket.svg)](https://github.com/MirageNet/MirrorNG_Websocket/releases/latest)
 
-[![Build](https://github.com/MirrorNG/MirrorNG_Websocket/workflows/CI/badge.svg)](https://github.com/MirrorNG/MirrorNG_Websocket/actions?query=workflow%3ACI)
+[![Build](https://github.com/MirageNet/MirrorNG_Websocket/workflows/CI/badge.svg)](https://github.com/MirageNet/MirrorNG_Websocket/actions?query=workflow%3ACI)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MirrorNG_MirrorNG_Websocket&metric=alert_status)](https://sonarcloud.io/dashboard?id=MirrorNG_MirrorNG_Websocket)
 [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=MirrorNG_MirrorNG_Websocket&metric=coverage)](https://sonarcloud.io/component_measures?id=MirrorNG_MirrorNG_Websocket&metric=coverage)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=MirrorNG_MirrorNG_Websocket&metric=ncloc)](https://sonarcloud.io/dashboard?id=MirrorNG_MirrorNG_Websocket)
@@ -13,7 +13,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=MirrorNG_MirrorNG_Websocket&metric=code_smells)](https://sonarcloud.io/dashboard?id=MirrorNG_MirrorNG_Websocket)
 
 
-MirrorNG Websocket is a transport for [MirrorNG](https://github.com/MirrorNG/MirrorNG) suitable for building and running webgl clients.
+Mirage Websocket is a transport for [Mirage](https://github.com/MirageNet/Mirage) suitable for building and running webgl clients.
 
 This is based on the [Ninja Websockets](https://github.com/ninjasource/Ninja.WebSockets), a pure C# library for serving and consuming websockets.
 
@@ -26,13 +26,13 @@ The preferred installation method is Unity Package manager.
 If you are using unity 2019.3 or later: 
 
 1) Open your project in unity
-2) Install [MirrorNG](https://github.com/MirrorNG/MirrorNG)
+2) Install [Mirage](https://github.com/MirageNet/Mirage)
 3) Click on Windows -> Package Manager
 4) Click on the plus sign on the left and click on "Add package from git URL..."
-5) enter https://github.com/MirrorNG/MirrorNG_Websocket.git?path=/Assets/Mirror/Websocket
-6) Unity will download and install MirrorNG Websocket
+5) enter https://github.com/MirageNet/MirrorNG_Websocket.git?path=/Assets/Mirage/Websocket
+6) Unity will download and install Mirage Websocket
 
-Alternatively you can download it from [Download Mirror](https://github.com/MirrorNG/MirrorNG_Websocket/releases).  You will need to install some dependencies yourself such as cecil.
+Alternatively you can download it from [Download Mirror](https://github.com/MirageNet/MirrorNG_Websocket/releases).  You will need to install some dependencies yourself such as cecil.
 
 ## Usage
 
